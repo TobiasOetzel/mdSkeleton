@@ -7,7 +7,8 @@ module.exports = function(grunt) {
 		dir: {
 			webapp: 'webapp',
 			dist: 'dist',
-			bower_components: 'bower_components'
+			bower_components: 'bower_components',
+			localServerTestUrl : 'http://localhost:8080/test-resources'
 		},
 
 		connect: {
@@ -80,10 +81,10 @@ module.exports = function(grunt) {
 			all: {
 				options: {
 					urls: [
-						'http://localhost:8080/test-resources/model/Device.qunit.html',
-						'http://localhost:8080/test-resources/model/MockableModel.qunit.html',
-						'http://localhost:8080/test-resources/util/formatter.qunit.html',
-						'http://localhost:8080/test-resources/NavigationJourney.qunit.html'
+						'<%= dir.localServerTestUrl %>/model/Device.qunit.html',
+						'<%= dir.localServerTestUrl %>/model/MockableModel.qunit.html',
+						'<%= dir.localServerTestUrl %>/util/formatter.qunit.html',
+						'<%= dir.localServerTestUrl %>/NavigationJourney.qunit.html'
 					]
 				}
 			}
