@@ -111,7 +111,7 @@ module.exports = function(grunt) {
 	// Build task
 	grunt.registerTask('build', ['openui5_preload', 'copy']);
 
-
+	// Test task
 	grunt.registerTask('test', ['openui5_connect:src', 'qunit']);
 
 	// Default task
