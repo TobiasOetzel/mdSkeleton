@@ -1,0 +1,66 @@
+<mvc:View
+	controllerName="sap.ui.demo.mdskeleton.view.Detail"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m">
+	<Page
+		navButtonPress="onNavBack"
+		title="{i18n>detailTitle}">
+		<content>
+			<ObjectHeader
+				title="{ProductName}"
+				number="{UnitPrice}"
+				numberUnit="USD">
+			</ObjectHeader>
+			<IconTabBar
+			    expanded="{device>/isNoPhone}">
+			    <items>
+			      <IconTabFilter
+			        icon="sap-icon://hint">
+			        <Text text="Info content goes here ..." />
+			      </IconTabFilter>
+			      <IconTabFilter
+			        icon="sap-icon://attachment">
+			        <Text text="Attachments go here ..." />
+			      </IconTabFilter>
+			      <IconTabFilter
+			        icon="sap-icon://notes">
+			        <Text text="Notes go here ..." />
+			      </IconTabFilter>
+			      <IconTabFilter
+			        icon="sap-icon://group">
+			        <Text text="People content goes here ..." />
+			      </IconTabFilter>
+			    </items>
+		  	</IconTabBar>
+			<Table id="orderDetailsList" items="{Order_Details}" noDataText="{i18n>detailLineItemTableNoDataText}" class="sapUiSmallMarginTop">
+				<headerToolbar>
+					<Toolbar>
+						<Label text="Order Details"></Label>
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column>
+						<Label text="Order" />
+					</Column>
+					<Column>
+						<Label text="Price" />
+					</Column>
+				</columns>
+		
+				<items>
+					<ColumnListItem type="Navigation" press="onSelect">
+						<cells>
+							<Text text="{OrderID}" />
+							<Text text="{UnitPrice}" />
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>	  				
+		</content>
+		<footer>
+			<Toolbar>
+			</Toolbar>
+		</footer>
+	</Page>
+</mvc:View>
