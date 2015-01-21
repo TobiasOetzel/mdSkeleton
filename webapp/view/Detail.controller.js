@@ -5,7 +5,7 @@ sap.ui.demo.mdskeleton.util.Controller.extend("sap.ui.demo.mdskeleton.view.Detai
 	onInit : function() {
 		this.oInitialLoadFinishedDeferred = jQuery.Deferred();
 
-		if(sap.ui.Device.system.phone) {
+		if (sap.ui.Device.system.phone) {
 			//don't wait for the master on a phone
 			this.oInitialLoadFinishedDeferred.resolve();
 		} else {
@@ -39,7 +39,7 @@ sap.ui.demo.mdskeleton.util.Controller.extend("sap.ui.demo.mdskeleton.view.Detai
 		oView.bindElement(sObjectPath);
 
 		//Check if the data is already on the client
-		if(!oView.getModel().getData(sObjectPath)) {
+		if (!oView.getModel().getData(sObjectPath)) {
 
 			// Check that the object specified actually was found.
 			oView.getElementBinding().attachEventOnce("dataReceived", jQuery.proxy(function() {
@@ -100,7 +100,7 @@ sap.ui.demo.mdskeleton.util.Controller.extend("sap.ui.demo.mdskeleton.view.Detai
 		if (oContext) {
 			var sMsg = "Detail Item '" + oContext.getProperty('LineItemID') + '/';
 			//TODO navigation to line item
-			sMsg += oContext.getProperty('ObjectID') + "' was pressed" 
+			sMsg += oContext.getProperty('ObjectID') + "' was pressed";
 			sap.m.MessageToast.show(sMsg, {
 				duration: 2000
 			});

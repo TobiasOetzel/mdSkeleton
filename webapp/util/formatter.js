@@ -32,7 +32,7 @@ sap.ui.define([], function () {
 		 * @returns {string}
 		 */
 		currencyValue : function (sValue) {
-			if(!sValue) {
+			if (!sValue) {
 				return "";
 			}
 
