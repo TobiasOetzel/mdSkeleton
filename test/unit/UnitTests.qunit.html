@@ -7,7 +7,8 @@
 
 	<script id="sap-ui-bootstrap"
 			src="/resources/sap-ui-core.js"
-			data-sap-ui-resourceroots='{"sap.ui.demo.mdskeleton": "../.././"}'>
+			data-sap-ui-resourceroots='{"sap.ui.demo.mdskeleton": "../../", "test.unit": "../unit"}'
+			>
 	</script>
 
 	<script>
@@ -41,9 +42,9 @@
 			};
 		}
 
-		jQuery.sap.require("sap.ui.demo.mdskeleton.test.unit.model.Device");
-		jQuery.sap.require("sap.ui.demo.mdskeleton.test.unit.model.MockableModel");
-		jQuery.sap.require("sap.ui.demo.mdskeleton.test.unit.util.formatter");
+		jQuery.sap.require("test.unit.model.Device");
+		jQuery.sap.require("test.unit.model.MockableModel");
+		jQuery.sap.require("test.unit.util.formatter");
 	</script>
 
 </head>

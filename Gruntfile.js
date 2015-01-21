@@ -6,6 +6,7 @@ module.exports = function(grunt) {
 
 		dir: {
 			webapp: 'webapp',
+			tests: 'test',
 			dist: 'dist',
 			bower_components: 'bower_components',
 			localServerTestUrl : 'http://localhost:8080/test-resources'
@@ -32,7 +33,7 @@ module.exports = function(grunt) {
 			src: {
 				options: {
 					appresources: ['<%= dir.webapp %>'],
-					testresources: [ '<%= dir.webapp %>/test']
+					testresources: [ '<%= dir.tests %>']
 				}
 			},
 			dist: {
@@ -88,7 +89,7 @@ module.exports = function(grunt) {
 
 				options: {
 					urls: [
-						'<%= dir.localServerTestUrl %>/unit/UnitTests.html'
+						'<%= dir.localServerTestUrl %>/unit/UnitTests.qunit.html'
 					]
 				}
 
