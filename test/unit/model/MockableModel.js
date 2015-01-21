@@ -17,7 +17,7 @@ sap.ui.require(
 			},
 			teardown: function () {
 				sinon.config.useFakeTimers = true;
-				this.oNorthwindModel.destroy();
+				this.oMdSkeletonModel.destroy();
 				this.oList.destroy();
 			}
 		});
@@ -35,9 +35,9 @@ sap.ui.require(
 					}
 				}
 			});
-			this.oNorthwindModel = new MockableModel({
+			this.oMdSkeletonModel = new MockableModel({
 				serviceUrl: "../../../../../foo/",
-				dataFolderName: "Northwind"
+				dataFolderName: "md_skeleton"
 			});
 
 			this.oList.attachUpdateFinished(function () {
@@ -48,9 +48,9 @@ sap.ui.require(
 			}, this);
 
 			// Act
-			this.oList.setModel(this.oNorthwindModel);
+			this.oList.setModel(this.oMdSkeletonModel);
 			this.oList.bindItems({
-				path : "/Products",
+				path : "/Objects",
 				template :  new sap.m.StandardListItem({
 					title: "{Name}"
 				})
