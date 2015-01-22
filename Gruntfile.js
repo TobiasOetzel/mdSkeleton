@@ -75,6 +75,9 @@ module.exports = function(grunt) {
 		},
 
 		eslint: {
+			options: {
+				quiet: true
+			},
 			webapp: ['<%= dir.webapp %>']
 		},
 
@@ -136,8 +139,6 @@ module.exports = function(grunt) {
 	// Default task
 	grunt.registerTask('default', [
 		'lint',
-		'clean',
-		'build',
-		'serve:dist'
+		'test'
 	]);
 };

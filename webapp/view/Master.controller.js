@@ -49,7 +49,7 @@ sap.ui.demo.mdskeleton.util.Controller.extend("sap.ui.demo.mdskeleton.view.Maste
 
 			var oSelectedItem = oList.getSelectedItem();
 			// the correct item is already selected
-			if(oSelectedItem && oSelectedItem.getBindingContext().getPath() === sObjectPath) {
+			if (oSelectedItem && oSelectedItem.getBindingContext().getPath() === sObjectPath) {
 				return;
 			}
 
