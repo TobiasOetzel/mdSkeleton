@@ -1,5 +1,6 @@
-jQuery.sap.declare("sap.ui.demo.mdskeleton.test.arrangement.NavigationArrangement");
-jQuery.sap.require("sap.ui.test.Opa5");
-var Opa5 = sap.ui.test.Opa5;
+sap.ui.define(['sap/ui/test/Opa5'],
+	function(Opa5) {
+		"use strict";
 
-sap.ui.demo.mdskeleton.test.arrangement.NavigationArrangement = Opa5.extend("sap.ui.demo.mdskeleton.test.arrangement.NavigationArrangement", {});
+		return Opa5.extend("sap.ui.demo.mdskeleton.test.opa.arrangement.NavigationArrangement", {});
+	});
