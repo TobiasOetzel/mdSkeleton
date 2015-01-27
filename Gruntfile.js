@@ -92,7 +92,7 @@ module.exports = function(grunt) {
 
 				options: {
 					urls: [
-						'<%= dir.localServerTestUrl %>/unit/UnitTests.qunit.html'
+						'<%= dir.localServerTestUrl %>/unit/UnitTestsGrunt.qunit.html'
 					]
 				}
 
@@ -101,7 +101,7 @@ module.exports = function(grunt) {
 
 				options: {
 					urls: [
-						'<%= dir.localServerTestUrl %>/opa/NavigationJourney.qunit.html'
+						'<%= dir.localServerTestUrl %>/opa/NavigationJourneyGrunt.qunit.html'
 					],
 					// same as qunits timeout 90 seconds since opa test might take a while
 					timeout: 900000
