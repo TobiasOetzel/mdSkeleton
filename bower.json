@@ -1,13 +1,13 @@
 {
-  "name": "md-skeleton",
+  "name": "md-template",
   "version": "0.0.0",
   "authors": [
     "SAP SE"
   ],
-  "description": "md-skeleton",
+  "description": "md-template",
   "main": "webapp/index.html",
   "keywords": [
-    "md-skeleton"
+    "md-template"
   ],
   "license": "MIT",
   "private": true,

@@ -1,3 +1,4 @@
+/*eslint-env node*/
 'use strict';
 
 module.exports = function(grunt) {
@@ -5,7 +6,7 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 
 		dir: {
-			webapp: 'webapp',
+			webapp: 'app',
 			tests: 'test',
 			dist: 'dist',
 			bower_components: 'bower_components',
@@ -32,8 +33,8 @@ module.exports = function(grunt) {
 			},
 			src: {
 				options: {
-					appresources: ['<%= dir.webapp %>'],
-					testresources: [ '<%= dir.tests %>']
+					appresources: ['.'],
+					testresources: ['<%= dir.tests %>']
 				}
 			},
 			dist: {
@@ -43,68 +44,37 @@ module.exports = function(grunt) {
 			}
 		},
 
-		openui5_preload: {
-			component: {
-				options: {
-					resources: {
-						cwd: '<%= dir.webapp %>',
-						prefix: 'todo'
-					},
-					dest: '<%= dir.dist %>'
-				},
-				components: true
-			}
-		},
-
-		clean: {
-			dist: '<%= dir.dist %>/'
-		},
-
-		copy: {
-			dist: {
-				files: [ {
-					expand: true,
-					cwd: '<%= dir.webapp %>',
-					src: [
-						'**',
-						'!test/**'
-					],
-					dest: '<%= dir.dist %>'
-				} ]
-			}
-		},
-
 		eslint: {
 			options: {
 				quiet: true
 			},
+
+			all: ['<%= dir.tests %>', '<%= dir.webapp %>'],
 			webapp: ['<%= dir.webapp %>']
 		},
-
 		qunit: {
 			options: {
 				/* for debugging*/
 				//'--remote-debugger-autorun' : 'yes',
-				//'--remote-debugger-port' : 8000
+				//'--remote-debugger-port' : 8000,
+
+				// same as qunits timeout 90 seconds since opa test might take a while
+				timeout: 90000
 			},
 
 			unit: {
-
 				options: {
 					urls: [
-						'<%= dir.localServerTestUrl %>/unit/UnitTests.qunit.html'
+						'<%= dir.localServerTestUrl %>/unit/unitTests.qunit.html'
 					]
 				}
 
 			},
 			opa: {
-
 				options: {
 					urls: [
-						'<%= dir.localServerTestUrl %>/opa/NavigationJourney.qunit.html'
-					],
-					// same as qunits timeout 90 seconds since opa test might take a while
-					timeout: 900000
+						'<%= dir.localServerTestUrl %>/integration/opaTests.qunit.html'
+					]
 				}
 
 			}
@@ -126,19 +96,19 @@ module.exports = function(grunt) {
 	});
 
 	// Linting task
-	grunt.registerTask('lint', ['eslint']);
+	grunt.registerTask('lint', ['eslint:all']);
 
 	// Build task
 	grunt.registerTask('build', ['openui5_preload', 'copy']);
 
 	// Test task
-	grunt.registerTask('test', ['openui5_connect:src', 'qunit:unit', 'qunit:opa']);
+	grunt.registerTask('test', ['openui5_connect:src','qunit:unit', 'qunit:opa']);
 	grunt.registerTask('unitTest', ['openui5_connect:src', 'qunit:unit']);
 	grunt.registerTask('opaTest', ['openui5_connect:src', 'qunit:opa']);
 
 	// Default task
 	grunt.registerTask('default', [
-		'lint',
+		'lint:all',
 		'test'
 	]);
 };
