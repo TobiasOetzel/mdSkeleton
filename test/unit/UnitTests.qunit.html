@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Device Model</title>
+	<title>Unit tests for MD-Template</title>
 	<meta http-equiv='X-UA-Compatible' content='IE=edge' />
 	<meta charset="UTF-8">
 
 	<script id="sap-ui-bootstrap"
 			src="/resources/sap-ui-core.js"
-			data-sap-ui-resourceroots='{"sap.ui.demo.mdskeleton": "../../", "test.unit": "../unit"}'
+			data-sap-ui-resourceroots='{"sap.ui.demo.mdtemplate": "../../app/", "test.unit": "./"}'
 			>
 	</script>
 
@@ -17,6 +17,7 @@
 		jQuery.sap.require("sap.ui.qunit.qunit-junit");
 		jQuery.sap.require("sap.ui.qunit.qunit-coverage");
 
+		// Phantom js does not have a function.bind implementation so we are using the ES5 polyfill
 		if (!Function.prototype.bind) {
 			Function.prototype.bind = function(oThis) {
 				if (typeof this !== 'function') {
@@ -42,15 +43,13 @@
 			};
 		}
 
-		jQuery.sap.require("test.unit.model.Device");
-		jQuery.sap.require("test.unit.model.MockableModel");
-		jQuery.sap.require("test.unit.util.formatter");
+		jQuery.sap.require("test.unit.allTests");
 	</script>
 
 </head>
 <body>
 <div id="content"></div>
-<h1 id="qunit-header">Test for Device Model</h1>
+<h1 id="qunit-header">Unit tests for MD-Template</h1>
 <h2 id="qunit-banner"></h2>
 <h2 id="qunit-userAgent"></h2>
 <div id="qunit-testrunner-toolbar"></div>
