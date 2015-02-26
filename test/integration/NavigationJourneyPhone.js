@@ -4,22 +4,35 @@ sap.ui.require(
 [
 	'sap/ui/test/Opa5',
 	'sap/ui/demo/mdtemplate/test/integration/action/NavigationAction',
-	'sap/ui/demo/mdtemplate/test/integration/arrangement/NavigationArrangement',
+	'sap/ui/demo/mdtemplate/test/integration/arrangement/StartAppArrangement',
 	'sap/ui/demo/mdtemplate/test/integration/assertion/NavigationAssertion'
 ],
-function (Opa5, NavigationAction, NavigationArrangement, NavigationAssertion) {
-	Opa5.extendConfig({
-		actions : new NavigationAction(),
-		arrangements : new NavigationArrangement(),
-		assertions : new NavigationAssertion(),
-		viewNamespace : "sap.ui.demo.mdtemplate.view."
-	});
+function (Opa5, NavigationAction, StartAppArrangement, NavigationAssertion) {
 
-	module("Mobile navigation");
+	module("Mobile navigation", { setup : function () {
+		Opa5.extendConfig({
+			actions : new NavigationAction(),
+			arrangements : new StartAppArrangement(),
+			assertions : new NavigationAssertion(),
+			viewNamespace : "sap.ui.demo.mdtemplate.view."
+		});
+	}});
+
+	opaTest("Should see a busy indication while loading the metadata", function (Given, When, Then) {
+		// Arrangements
+		Given.iStartTheAppOnAPhoneWithDelay("", 10000);
+
+		//Actions
+		When.iLookAtTheScreen();
+
+		// Assertions
+		Then.iShouldSeeTheBusyIndicator().
+			and.iTeardownMyAppFrame();
+	});
 
 	opaTest("Should see the objects list", function (Given, When, Then) {
 		// Arrangements
-		Given.GivenIStartTheAppOnAPhone();
+		Given.iStartTheAppOnAPhone();
 
 		//Actions
 		When.iLookAtTheScreen();
@@ -92,7 +105,7 @@ function (Opa5, NavigationAction, NavigationArrangement, NavigationAssertion) {
 			and.theNextButtonIsEnabled();
 
 	});
-	
+
 	opaTest("Line Item Page: after several 'Next' and 'Previous' navigation, going back in browser history should take us back to Detail Page for Object 1", function (Given, When, Then) {
 
 		// Actions
