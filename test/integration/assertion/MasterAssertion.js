@@ -93,7 +93,7 @@ sap.ui.define(['sap/ui/test/Opa5', 'sap/ui/test/matchers/AggregationLengthEquals
 		theMasterListShouldBeFilteredOnUnitNumberValue : function(iThreshhold, bGreaterThan, oRange) {
 			
 			function fnCheckFilter (oList){
-					fnIsGreaterThanMaxValue = function (oElement) {
+					var fnIsGreaterThanMaxValue = function (oElement) {
 						if (bGreaterThan) {
 							return oElement.getBindingContext().getProperty("UnitNumber") < iThreshhold;
 						}
