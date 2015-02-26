@@ -55,11 +55,8 @@ module.exports = function(grunt) {
 		qunit: {
 			options: {
 				/* for debugging*/
-				//'--remote-debugger-autorun' : 'yes',
-				//'--remote-debugger-port' : 8000,
-
-				// same as qunits timeout 90 seconds since opa test might take a while
-				timeout: 90000
+				'--remote-debugger-autorun' : 'yes',
+				'--remote-debugger-port' : 8000
 			},
 
 			unit: {
@@ -74,7 +71,9 @@ module.exports = function(grunt) {
 				options: {
 					urls: [
 						'<%= dir.localServerTestUrl %>/integration/opaTests.qunit.html'
-					]
+					],
+					// same as qunits timeout 90 seconds since opa test might take a while
+					timeout: 900000
 				}
 
 			}
@@ -102,7 +101,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('build', ['openui5_preload', 'copy']);
 
 	// Test task
-	grunt.registerTask('test', ['openui5_connect:src','qunit:unit', 'qunit:opa']);
+	grunt.registerTask('test', ['openui5_connect:src', 'qunit:unit', 'qunit:opa']);
 	grunt.registerTask('unitTest', ['openui5_connect:src', 'qunit:unit']);
 	grunt.registerTask('opaTest', ['openui5_connect:src', 'qunit:opa']);
 

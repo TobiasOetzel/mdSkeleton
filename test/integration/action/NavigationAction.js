@@ -1,5 +1,5 @@
-sap.ui.define(['sap/ui/test/Opa5'],
-	function(Opa5) {
+sap.ui.define(['sap/ui/test/Opa5', 'sap/ui/test/matchers/AggregationLengthEquals'],
+	function(Opa5, AggregationLengthEquals) {
 	"use strict";
 
 	return Opa5.extend("sap.ui.demo.mdtemplate.test.integration.action.NavigationAction", {
@@ -80,7 +80,28 @@ sap.ui.define(['sap/ui/test/Opa5'],
 		iChangeTheHashToObject3 : function () {
 			return this.waitFor({
 				success : function () {
-					sap.ui.test.Opa5.getWindow().location.hash = "#/Objects/ObjectID_3";
+					sap.ui.test.Opa5.getWindow().location.hash = "#/object/ObjectID_3";
+				}
+			});
+		},
+		
+		iChangeTheHashToSomethingInvalid : function () {
+			return this.waitFor({
+				success : function () {
+					sap.ui.test.Opa5.getWindow().location.hash = "#/somethingInvalid";
+				}
+			});
+		},
+		
+		iSearchForSomethingWithNoResults : function () {
+			//TODO refactoring of page objects: reuse this from 'MasterAction'
+			return this.waitFor({
+				id : "searchField",
+				viewName: "Master",
+				success : function (oSearchField) {
+					oSearchField.$("I").focus().val("abc").trigger("input");
+					// there is no easy way to simulate a search, we fire the event directly
+					oSearchField.fireSearch({query: "abc"});
 				}
 			});
 		},
@@ -112,22 +133,29 @@ sap.ui.define(['sap/ui/test/Opa5'],
 				success : function () {
 					sap.ui.test.Opa5.getWindow().history.back();
 				},
-				errorMessage : "Failed to go back in browser history"
 			});
 		},
 		
-//TODO remove comments once 'sap.ui.test.Opa5.getWindow().history.forward' is fixed		
-//		iGoForwardInBrowserHistory : function () {
-//			return this.waitFor({
-//				success : function () {
-//					sap.ui.test.Opa5.getWindow().history.forward();
-//				},
-//				errorMessage : "Failed to go forward in browser history"
-//			});
-//		},
+
+		iGoForwardInBrowserHistory : function () {
+			return this.waitFor({
+				success : function () {
+					sap.ui.test.Opa5.getWindow().history.forward();
+				},
+			});
+		},
 
 		iLookAtTheScreen : function () {
 			return this;
+		},
+		
+		iWaitUntilTheMasterListIsLoaded : function () {
+			return this.waitFor({
+				id : "list",
+				viewName : "Master",
+				matchers : [ new AggregationLengthEquals({name : "items", length : 9}) ],
+				errorMessage : "The master list has not been loaded"
+			});
 		}
 	});
 });
