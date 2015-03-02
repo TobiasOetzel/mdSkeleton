@@ -10,9 +10,28 @@
 		<name>mdtemplate test</name>
 		<description> sap.m.test.demo.mdtemplate</description>
 
-			<parent>
-				<groupId>com.sap.fiori</groupId>
-				<artifactId>fnf-parent-pom</artifactId>
-				<version>1.6.0-SNAPSHOT</version>
-			</parent>
+		<parent>
+			<groupId>com.sap.fiori</groupId>
+			<artifactId>fnf-parent-pom</artifactId>
+			<version>1.6.0-SNAPSHOT</version>
+		</parent>
+		
+		<plugin>
+			<groupId>com.sap.ui5.tools.build</groupId>
+			<artifactId>maven-coldwater-plugin</artifactId>
+			<executions>
+				<execution>
+				<id>merge-application-modules</id>
+				<configuration>
+					<resourceRoots>
+						<resourceRoot>
+							<folder>${basedir}/src/main/app</folder>
+							<prefix>sap/m/demo/mdtemplate</prefix>
+							<autoDetectPrefix>false</autoDetectPrefix>
+						</resourceRoot>
+					</resourceRoots>
+				</configuration>
+				</execution>
+			</executions>
+		</plugin>
 </project>
