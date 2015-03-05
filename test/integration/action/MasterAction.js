@@ -119,7 +119,7 @@ sap.ui.define(['sap/ui/test/Opa5'],
 				success : function (oList) {
 					oObjectListItem.$().trigger("tap");
 				},
-				errorMessage : "List list in view Master does not contain an ObjectListItem with title '" + sObjectTitle + "'"
+				errorMessage : "List 'list' in view 'Master' does not contain an ObjectListItem with title '" + sObjectTitle + "'"
 			});
 		},
 		

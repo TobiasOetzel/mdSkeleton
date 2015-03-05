@@ -5,11 +5,11 @@ sap.ui.define(['sap/ui/test/Opa5', 'sap/ui/test/matchers/AggregationLengthEquals
 	return Opa5.extend("sap.ui.demo.mdtemplate.test.integration.assertion.MasterAssertion", {
 		
 		theMasterListShouldContainGroup20OrLess : function () {
-			return this.theMasterListShouldBeGroupedBy('Price 20 or less');
+			return this.theMasterListShouldBeGroupedBy('Unit Number 20 or less');
 		},
 		
 		theMasterListShouldContainGroup20OrMore : function () {
-			return this.theMasterListShouldBeGroupedBy('Price higher than 20');
+			return this.theMasterListShouldBeGroupedBy('Unit Number higher than 20');
 		},
 		
 		theMasterListGroupShouldBeFilteredOnUnitNumberValue20OrLess : function () {
@@ -93,7 +93,7 @@ sap.ui.define(['sap/ui/test/Opa5', 'sap/ui/test/matchers/AggregationLengthEquals
 		theMasterListShouldBeFilteredOnUnitNumberValue : function(iThreshhold, bGreaterThan, oRange) {
 			
 			function fnCheckFilter (oList){
-					var fnIsGreaterThanMaxValue = function (oElement) {
+				var fnIsGreaterThanMaxValue = function (oElement) {
 						if (bGreaterThan) {
 							return oElement.getBindingContext().getProperty("UnitNumber") < iThreshhold;
 						}
@@ -149,27 +149,30 @@ sap.ui.define(['sap/ui/test/Opa5', 'sap/ui/test/matchers/AggregationLengthEquals
 			});
 		},
 		
-		theMasterListShouldHave1Entry : function () {
+		theMasterListShouldHaveNEntries : function (iObjIndex) {
 			return this.waitFor({
 				id : "list",
 				viewName : "Master",
-				matchers : [ new AggregationLengthEquals({name : "items", length : 1}) ],
+				matchers : [ new AggregationLengthEquals({name : "items", length : iObjIndex}) ],
 				success : function (oList) {
-					strictEqual(oList.getItems().length, 1, "The list has 1 item");
+					strictEqual(oList.getItems().length, iObjIndex, "The list has x items");
 				},
-				errorMessage : "List does not have 1 entry."
+				errorMessage : "List does not have " + iObjIndex + " entries."
 			});
 		},
 		
-		theMasterListShouldHave9Entries : function () {
+		theMasterListShouldHaveAllEntries : function () {	
 			return this.waitFor({
 				id : "list",
 				viewName : "Master",
-				matchers : [ new AggregationLengthEquals({name : "items", length : 9}) ],
-				success : function (oList) {
-					strictEqual(oList.getItems().length, 9, "The list has 9 items");
+				matchers : function (oList) {
+					var iThreshold = oList.getGrowingThreshold();
+					return new AggregationLengthEquals({name : "items", length : iThreshold}).isMatching(oList);
 				},
-				errorMessage : "List does not have 9 entries."
+				success : function (oList) {
+					strictEqual(oList.getItems().length, oList.getGrowingThreshold(), "The growing list has 10 items");
+				},
+				errorMessage : "List does not have all entries."
 			});
 		}
 	});

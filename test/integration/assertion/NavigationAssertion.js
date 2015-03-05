@@ -38,15 +38,27 @@ sap.ui.define(['sap/ui/test/Opa5', 'sap/ui/test/matchers/AggregationLengthEquals
 			});
 		},
 
-		theObjectListShouldHave9Entries : function () {
+		theObjectListShouldHave10Entries : function () {
 			return this.waitFor({
 				id : "list",
 				viewName : "Master",
-				matchers : [ new AggregationLengthEquals({name : "items", length : 9}) ],
+				matchers : [ new AggregationLengthEquals({name : "items", length : 10}) ],
 				success : function (oList) {
-					strictEqual(oList.getItems().length, 9, "The list has 9 items");
+					strictEqual(oList.getItems().length, 10, "The list has 10 items");
 				},
-				errorMessage : "List does not have 9 entries."
+				errorMessage : "List does not have 10 entries."
+			});
+		},
+		
+		theMasterPageHeaderShouldDisplay20Entries : function () {
+			return this.waitFor({
+				id : "page",
+				viewName : "Master",
+				matchers : [ new PropertyStrictEquals({name : "title", value : "Objects (20)"}) ],
+				success : function (oList) {
+					ok(true, "The master page header displays 20 items");
+				},
+				errorMessage : "The  master page header does not display 20 items."
 			});
 		},
 
@@ -63,12 +75,8 @@ sap.ui.define(['sap/ui/test/Opa5', 'sap/ui/test/matchers/AggregationLengthEquals
 			});
 		},
 
-		iShouldBeOnTheObject3Page : function () {
-			return this.iShouldBeOnPage("Detail", "Object 3");
-		},
-
-		iShouldBeOnTheObject1Page : function () {
-			return this.iShouldBeOnPage("Detail", "Object 1");
+		iShouldBeOnTheObjectNPage : function (iObjIndex) {
+			return this.iShouldBeOnPage("Detail", "Object " + iObjIndex);
 		},
 
 		iShouldSeeTheObjectLineItemsList : function () {
@@ -92,6 +100,18 @@ sap.ui.define(['sap/ui/test/Opa5', 'sap/ui/test/matchers/AggregationLengthEquals
 				errorMessage : "The list does not have 4 items."
 			});
 		},
+		
+		theLineItemsHeaderShouldDisplay4Entries : function () {
+			return this.waitFor({
+				id : "lineItemsHeader",
+				viewName : "Detail",
+				matchers : [ new PropertyStrictEquals({name : "text", value : "Line Items (4)"}) ],
+				success : function (oList) {
+					ok(true, "The line item list displays 4 items");
+				},
+				errorMessage : "The line item list does not display 4 items."
+			});
+		},
 
 		theFirstLineItemHasIDLineItemID_1 : function () {
 			return this.waitFor({
@@ -106,18 +126,18 @@ sap.ui.define(['sap/ui/test/Opa5', 'sap/ui/test/matchers/AggregationLengthEquals
 			});
 		},
 
-		theObject3ShouldBeSelectedInTheMasterList : function() {
+		theObjectNShouldBeSelectedInTheMasterList : function(iObjIndex) {
 			return this.waitFor({
 				id : "list",
 				viewName : "Master",
-				matchers : [ new AggregationLengthEquals({name : "items", length : 9}) ],
+				matchers : [ new AggregationLengthEquals({name : "items", length : 10}) ],
 				success : function (oList) {
-					strictEqual(oList.getSelectedItem().getTitle(), "Object 3", "Object 3 is selected");
+					strictEqual(oList.getSelectedItem().getTitle(), "Object " + iObjIndex, "Object 3 is selected");
 				},
 				errorMessage : "Object 3 is not selected."
 			});
 		},
-
+		
 		iShouldBeOnTheLineItem1Page : function() {
 			return this.iShouldBeOnPage("LineItem", "Line Item: LineItemID_1");
 		},

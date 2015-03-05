@@ -1,5 +1,9 @@
-# mdSkeleton
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!    The md-template app is EXPERIMENTAL, do not use this code productively    !!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-[![Build Status](https://travis-ci.org/TobiasOetzel/mdSkeleton.svg?branch=master)](https://travis-ci.org/TobiasOetzel/mdSkeleton)
+This app will become a best practice implementation of the Master-Detail design pattern in UI5.
+It is currently work in progress and may be changed or deleted at any time without further notice.
 
-working draft of a master detail ui5 app
+See our compatibility rules for more information:
+http://veui5infra.dhcp.wdf.sap.corp:8080/demokit/#docs/guide/91f087396f4d1014b6dd926db0e91070.html#experimental

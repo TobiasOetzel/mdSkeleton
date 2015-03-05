@@ -7,11 +7,17 @@ sap.ui.define([
 
 		onInit : function () {
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
+			this._oLineItemsList = this.byId("lineItemsList");
 
 			// When there is a list displayed, bind to the first item.
 			if (!sap.ui.Device.system.phone) {
 				this.getRouter().getRoute("master").attachPatternMatched(this._onMasterMatched, this);
 			}
+			
+			// Update the line item list counter after data is loaded or updated
+			this._oLineItemsList.attachEvent("updateFinished", function (oData) {
+				this._updateListItemCount(oData.getParameter("total"));
+			}, this);
 
 			// Set the detail page busy after the metadata has been loaded successfully
 			this.getOwnerComponent().oWhenMetadataIsLoaded.then(function () {
@@ -19,6 +25,12 @@ sap.ui.define([
 					this.getView().setBusy(true);
 				}.bind(this)
 			);
+			
+			// Control state model
+			this._oControlStateModel = new sap.ui.model.json.JSONModel({
+				lineItemListTitle : this.getResourceBundle().getText("detailLineItemTableHeading")
+			});
+			this.setModel(this._oControlStateModel, 'controlStates');
 		},
 
 		/**
@@ -83,33 +95,39 @@ sap.ui.define([
 				function (sPath) {
 					this.getView().setBusyIndicatorDelay(null);
 					this.getView().setBusy(false);
-					this.getOwnerComponent().oListSelector.selectAndScrollToAListItem(sPath);
+					this.getOwnerComponent().oListSelector.selectAListItem(sPath);
 				}.bind(this),
 				function () {
 					this.getView().setBusyIndicatorDelay(null);
 					this.getView().setBusy(false);
 					this.getRouter().getTargets().display("detailObjectNotFound");
 					// if object could not be found, the selection in the master list
-					// does not make sense anymore. 
+					// does not make sense anymore.
 					this.getOwnerComponent().oListSelector.clearMasterListSelection();
 				}.bind(this)
 			);
 
 		},
-
+		
 		/**
-		 * On detail view, 'nav back' is only relevant when
-		 * running on phone devices. On larger screens, the detail
-		 * view has no other view to go back to.
-		 * If running on phone though, the app
-		 * will navigate back to the 'main' view.
-		 *
-		 * @function
+		 * Sets the item count on the line item list header
+		 * @param {integer} the total number of items in the list
+		 * @private
 		 */
-		onNavBack : function () {
-			// This is only relevant when running on phone devices
-			this.getRouter().myNavBack("main");
+		_updateListItemCount : function (iTotalItems) {
+			var sTitle;
+			// only update the counter if the length is final 
+			if (this._oLineItemsList.getBinding('items').isLengthFinal()) {
+				if (iTotalItems) {
+					sTitle = this.getResourceBundle().getText("detailLineItemTableHeadingCount", [iTotalItems]);
+				} else {
+					//Display 'Line Items' instead of 'Line items (0)'
+					sTitle = this.getResourceBundle().getText("detailLineItemTableHeading");
+				}
+				this._oControlStateModel.setProperty("/lineItemListTitle", sTitle);
+			}
 		},
+
 
 		/**
 		 * Triggered when an item of the line item table in the detail view is selected.
