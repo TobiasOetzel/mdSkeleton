@@ -9,10 +9,9 @@ sap.ui.define([
 		_sModulePath : "sap.ui.demo.mdtemplate.service",
 
 		/**
-		 * Initializes the mock server. You can configure the delay with the URL
-		 * parameter "serverDelay" The local mock data in this folder is
-		 * returned instead of the real data for testing.
-		 * 
+		 * Initializes the mock server. You can configure the delay with the URL parameter "serverDelay"
+		 * The local mock data in this folder is returned instead of the real data for testing.
+		 *
 		 * @public
 		 */
 
@@ -32,8 +31,7 @@ sap.ui.define([
 			// load local mock data
 			oMockServer.simulate(sPath + "/metadata.xml", sPath);
 			oMockServer.start();
-			
-			
+
 			jQuery.sap.log.info("Running the app with mock data");
 		}
 	};

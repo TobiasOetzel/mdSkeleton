@@ -38,25 +38,24 @@ function (Opa5, NavigationAction, StartAppArrangement, NavigationAssertion) {
 		When.iLookAtTheScreen();
 
 		// Assertions
-		Then.iShouldSeeTheObjectList().
-			and.theObjectListShouldHave9Entries();
+		Then.iShouldSeeTheObjectList();
 	});
 
 	opaTest("Should react on hashchange", function (Given, When, Then) {
 		// Actions
-		When.iChangeTheHashToObject3();
+		When.iChangeTheHashToObjectN(3);
 
 		// Assertions
-		Then.iShouldBeOnTheObject3Page();
+		Then.iShouldBeOnTheObjectNPage(3);
 	});
 
 
 	opaTest("Should navigate on press", function (Given, When, Then) {
 		// Actions
-		When.iPressTheBackButton().and.iPressOnTheObject1InMasterList();
+		When.iPressTheBackButtonOnDetailPage().and.iPressOnTheObject1InMasterList();
 
 		// Assertions
-		Then.iShouldBeOnTheObject1Page();
+		Then.iShouldBeOnTheObjectNPage(1);
 	});
 
 	opaTest("Detail Page Shows Object Details", function (Given, When, Then) {
@@ -112,9 +111,23 @@ function (Opa5, NavigationAction, StartAppArrangement, NavigationAssertion) {
 		When.iGoBackInBrowserHistory();
 
 		// Assertions
-		Then.iShouldBeOnTheObject1Page().
+		Then.iShouldBeOnTheObjectNPage(1).
 			and.iTeardownMyAppFrame();
 
+	});
+	
+	opaTest("Navigate directly to Line Item 7 of object 3 with hash: press back button twice should take me to the master list", function (Given, When, Then) {
+		//Arrangement
+		Given.iStartTheAppOnAPhone("#/object/ObjectID_3/lineitem/LineItemID_7");
+		
+		//Actions
+		When.iWaitUntilISeePageForLineItem7().
+		    and.iPressTheBackButtonOnLineItemPage().
+			and.iPressTheBackButtonOnDetailPage();
+
+		// Assertions
+		Then.iShouldSeeTheObjectList().
+			and.iTeardownMyAppFrame();
 	});
 
 });

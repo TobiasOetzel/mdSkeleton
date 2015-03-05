@@ -33,14 +33,18 @@
 					sorter: {
 						path: 'Name',
 						descending: false
-						}
-					}"
+						},
+					groupHeaderFactory: '.createGroupHeader'
+				}"
 				noDataText="{i18n>masterListNoDataText}"
 				busyIndicatorDelay="0"
 				mode="{
 					path: 'device>/isPhone',
 					formatter: 'sap.ui.demo.mdtemplate.model.formatter.listMode'
 				}"
+				growing="true"
+				growingThreshold="10"
+				growingScrollToLoad="true"
 				updateFinished="onUpdateFinished"
 				select="onSelect">
 				<infoToolbar>
@@ -72,7 +76,7 @@
 			</List>
 		</content>
 		<footer>
-			<Toolbar>
+			<OverflowToolbar>
 				<ToolbarSpacer/>
 				<!-- simple sort/group/filter with Select controls -->
 				<Select
@@ -92,7 +96,8 @@
 				</Select>
 				
 				<!-- complex sort/group/filter with ViewSettingsDialog -->
-				<Button
+				<OverflowToolbarButton
+					text="{i18n>MasterListFilterButtonOverflowText}"
 					id="filter"
 					icon="sap-icon://filter"
 					press="onOpenViewSettings"/>
@@ -112,7 +117,7 @@
 						key="Group1"
 						text="{i18n>masterGroup1}"/>
 				</Select>
-			</Toolbar>
+			</OverflowToolbar>
 		</footer>
 	</Page>
 </mvc:View>
