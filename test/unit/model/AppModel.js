@@ -11,14 +11,14 @@ sap.ui.require(
 		QUnit.module("Wait for element binding", {
 			setup: function () {
 				sinon.config.useFakeTimers = false;
-				this.oMdTemplateModel = new AppModel({
+				this.oAppModel = new AppModel({
 					serviceUrl: "../../../../../foo/",
 					dataFolderName: "md_template"
 				});
 			},
 			teardown: function () {
 				sinon.config.useFakeTimers = true;
-				this.oMdTemplateModel.destroy();
+				this.oAppModel.destroy();
 			}
 		});
 
@@ -37,7 +37,7 @@ sap.ui.require(
 				fnRejectSpy = this.spy();
 
 			// Act
-			this.oMdTemplateModel.whenThereIsDataForTheElementBinding(oElementBindingStub).then(function (sPath) {
+			this.oAppModel.whenThereIsDataForTheElementBinding(oElementBindingStub).then(function (sPath) {
 				// Assert
 				assert.strictEqual(fnRejectSpy.callCount, 0, "Did not reject");
 				assert.strictEqual(sPath, sModelPath, "Dis pass the correct path");
@@ -70,7 +70,7 @@ sap.ui.require(
 				fnResolveSpy = this.spy();
 
 			// Act
-			this.oMdTemplateModel.whenThereIsDataForTheElementBinding(oElementBindingStub).then(fnResolveSpy, fnRejectSpy);
+			this.oAppModel.whenThereIsDataForTheElementBinding(oElementBindingStub).then(fnResolveSpy, fnRejectSpy);
 
 			setTimeout(function () {
 
@@ -114,7 +114,7 @@ sap.ui.require(
 				});
 
 			// Act
-			this.oMdTemplateModel.whenThereIsDataForTheElementBinding(oElementBindingStub).then(fnResolveSpy, fnRejectSpy);
+			this.oAppModel.whenThereIsDataForTheElementBinding(oElementBindingStub).then(fnResolveSpy, fnRejectSpy);
 
 			setTimeout(function () {
 

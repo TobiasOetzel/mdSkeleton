@@ -10,7 +10,8 @@
 		data-sap-ui-resourceroots='{
 			"sap.ui.demo.mdtemplate": "../../app/",
 			"test.unit": "./"
-		}'>
+		}'
+		data-sap-ui-frameOptions='deny'>
 	</script>
 
 	<script>
@@ -18,6 +19,7 @@
 		jQuery.sap.require("sap.ui.thirdparty.qunit");
 		jQuery.sap.require("sap.ui.qunit.qunit-junit");
 		jQuery.sap.require("sap.ui.qunit.qunit-coverage");
+
 
 		// Phantom js does not have a function.bind implementation so we are using a polyfill
 		if (!Function.prototype.bind) {
