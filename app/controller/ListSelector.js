@@ -27,11 +27,15 @@ sap.ui.define(['sap/ui/base/Object'], function (Object) {
 								// Have to make sure that first list Item is selected
 								// and a select event is triggered. Like that, the corresponding
 								// detail page is loaded automatically
-								fnResolve({list: oList, 
-									path: oFirstListItem.getBindingContext().getPath()});
+								fnResolve({
+									list: oList,
+									path: oFirstListItem.getBindingContext().getPath()
+								});
 							} else {
 								// No items in the list
-								fnReject();
+								fnReject({
+									list : oList
+								});
 							}
 
 						});
@@ -71,8 +75,8 @@ sap.ui.define(['sap/ui/base/Object'], function (Object) {
 		},
 
 		/**
-		 * Tries to select and scroll to a list item with a matching binding context. If there are no items matching the binding context or the ListMode is none,
-		 * no selection/scrolling will happen
+		 * Tries to select a list item with a matching binding context. If there are no items matching the binding context or the ListMode is none,
+		 * no selection will happen
 		 *
 		 * @param sBindingPath the binding path matching the binding path of a list item
 		 * @public
@@ -95,19 +99,18 @@ sap.ui.define(['sap/ui/base/Object'], function (Object) {
 				}
 
 				oList.getItems().some(function (oItem) {
-					if (oItem.getBindingContext().getPath() === sBindingPath) {
+					if (oItem.getBindingContext() && oItem.getBindingContext().getPath() === sBindingPath) {
 						oList.setSelectedItem(oItem);
-						// TODO: scroll to selected item
 						return true;
 					}
 				});
 			}.bind(this));
 		},
-		
+
 		/**
-		 * Removes all selections from master list. 
+		 * Removes all selections from master list.
 		 * Does not trigger 'selectionChange' event on master list, though.
-		 * 
+		 *
 		 * @public
 		 */
 		clearMasterListSelection : function () {
@@ -116,8 +119,8 @@ sap.ui.define(['sap/ui/base/Object'], function (Object) {
 				this._oList.removeSelections(true);
 			}.bind(this));
 		}
-		
-		
+
+
 	});
 
 }, /* bExport= */ true);
