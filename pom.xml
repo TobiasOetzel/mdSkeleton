@@ -42,7 +42,7 @@
                         <configuration>
                             <resourceRoots>
                                 <resourceRoot>
-                                    <folder>${basedir}/app</folder>
+                                    <folder>${basedir}/src/main/webapp</folder>
                                     <prefix>sap/m/demo/mdtemplate</prefix>
                                     <autoDetectPrefix>false</autoDetectPrefix>
                                 </resourceRoot>
