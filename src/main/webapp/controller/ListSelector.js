@@ -1,7 +1,7 @@
-sap.ui.define(['sap/ui/base/Object'], function (Object) {
+sap.ui.define(['sap/ui/base/EventProvider'], function (EventProvider) {
 	"use strict";
 
-	return Object.extend("sap.ui.demo.mdtemplate.model.ListSelector", {
+	return EventProvider.extend("sap.ui.demo.mdtemplate.model.ListSelector", {
 
 		/**
 		 * Provides a convenience API for selecting list items. All the functions will wait until the initial load of the a List passed to the instance by the setBoundMasterList
@@ -11,7 +11,9 @@ sap.ui.define(['sap/ui/base/Object'], function (Object) {
 		 * @public
 		 * @alias sap.ui.demo.mdtemplate.model.ListSelector
 		 */
-		constructor : function () {
+
+		constructor: function () {
+			sap.ui.base.EventProvider.prototype.constructor.apply(this, arguments);
 			this._oWhenListHasBeenSet = new Promise(function (fnResolveListHasBeenSet) {
 				this._fnResolveListHasBeenSet = fnResolveListHasBeenSet;
 			}.bind(this));
@@ -20,9 +22,8 @@ sap.ui.define(['sap/ui/base/Object'], function (Object) {
 				// Used to wait until the setBound masterList function is invoked
 				this._oWhenListHasBeenSet
 					.then(function (oList) {
-						oList.attachEventOnce("updateFinished", function() {
+						oList.attachEventOnce("updateFinished", function () {
 							var oFirstListItem = oList.getItems()[0];
-
 							if (oFirstListItem) {
 								// Have to make sure that first list Item is selected
 								// and a select event is triggered. Like that, the corresponding
@@ -34,14 +35,12 @@ sap.ui.define(['sap/ui/base/Object'], function (Object) {
 							} else {
 								// No items in the list
 								fnReject({
-									list : oList
+									list: oList
 								});
 							}
-
 						});
-					});
+					}.bind(this));
 			}.bind(this));
-
 		},
 
 		/**
@@ -51,28 +50,17 @@ sap.ui.define(['sap/ui/base/Object'], function (Object) {
 		 * @param {sap.m.List} oList The list all the select functions will be invoked on.
 		 * @public
 		 */
-		setBoundMasterList : function (oList) {
+		setBoundMasterList: function (oList) {
 			this._oList = oList;
 			this._fnResolveListHasBeenSet(oList);
+
+			// this handles that the master gets closed if the app is run
+			// on a tablet in orientation mode.
+			oList.attachEvent("selectionChange", function () {
+					this.fireListSelectionChanged();
+			}, this);
 		},
 
-		/**
-		 * After the list is loaded, the first item will be selected, if there are items and if the ListMode is not None.
-		 * @public
-		 */
-		selectFirstItem : function () {
-			this.oWhenListLoadingIsDone.then(this._selectFirstItem.bind(this));
-		},
-
-		/**
-		 * Searches for the first item of the list then
-		 * @private
-		 */
-		_selectFirstItem : function(sPath) {
-			if (sPath) {
-				this.selectAListItem(sPath);
-			}
-		},
 
 		/**
 		 * Tries to select a list item with a matching binding context. If there are no items matching the binding context or the ListMode is none,
@@ -81,7 +69,7 @@ sap.ui.define(['sap/ui/base/Object'], function (Object) {
 		 * @param sBindingPath the binding path matching the binding path of a list item
 		 * @public
 		 */
-		selectAListItem : function (sBindingPath) {
+		selectAListItem: function (sBindingPath) {
 
 			this.oWhenListLoadingIsDone.then(function () {
 				var oList = this._oList,
@@ -107,6 +95,28 @@ sap.ui.define(['sap/ui/base/Object'], function (Object) {
 			}.bind(this));
 		},
 
+
+		//
+		// Convenience Functions for List Selection Change Event
+		//
+
+		fireListSelectionChanged : function () {
+			this.fireEvent(this.M_EVENTS.ListSelectionChanged);
+		},
+
+		attachListSelectionChanged : function () {
+			this.attachEvent(this.M_EVENTS.ListSelectionChanged);
+		},
+
+		detachListSelectionChanged : function () {
+			this.detachEvent(this.M_EVENTS.ListSelectionChanged);
+		},
+
+
+		M_EVENTS : {
+			ListSelectionChanged : "listSelectionChanged"
+		},
+
 		/**
 		 * Removes all selections from master list.
 		 * Does not trigger 'selectionChange' event on master list, though.
@@ -119,8 +129,5 @@ sap.ui.define(['sap/ui/base/Object'], function (Object) {
 				this._oList.removeSelections(true);
 			}.bind(this));
 		}
-
-
 	});
-
 }, /* bExport= */ true);
