@@ -55,8 +55,23 @@ sap.ui.define([
 				}.bind(this));
 			}.bind(this));
 
+
 			oListSelector.setBoundMasterList(this._oList);
-			this.getRouter().getRoute("master").attachPatternMatched(oListSelector.selectFirstItem, oListSelector);
+
+			// if the master route was hit (empty hash) we have to set
+			// the hash to to the first item in the list as soon as the
+			// listLoading is done and the first item in the list is known
+			this.getRouter().getRoute("master").attachPatternMatched( function() {
+				oListSelector.oWhenListLoadingIsDone.then(
+					function () {
+						if (this._oList.getMode() !== "None") {
+								var sObjectId = this._oList.getItems()[0].getBindingContext().getProperty("ObjectID");
+								this.getRouter().navTo("object", {objectId : sObjectId}, true);
+						}
+					}.bind(this)
+				)
+			}, this);
+
 			this.getRouter().attachBypassed(this.onBypassed, this);
 		},
 
@@ -169,6 +184,8 @@ sap.ui.define([
 			if (!this.oViewSettingsDialog) {
 				this.oViewSettingsDialog = sap.ui.xmlfragment("sap.ui.demo.mdtemplate.view.ViewSettingsDialog", this);
 				this.getView().addDependent(this.oViewSettingsDialog);
+				// sync compact style
+				jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this.oViewSettingsDialog);
 			}
 			this.oViewSettingsDialog.open();
 		},

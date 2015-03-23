@@ -15,83 +15,12 @@ sap.ui.define([
 
 		metadata : {
 			name : "MD Template",
-			dependencies : {
-				libs : [
-					"sap.m",
-					"sap.ui.layout"
-				]
-			},
-
-			rootView : "sap.ui.demo.mdtemplate.view.App",
+			manifest: "json",
 
 			config : {
-				messageBundle : "sap.ui.demo.mdtemplate.i18n.messageBundle",
 				// always use absolute paths relative to our own component
 				// (relative paths will fail if running in the Fiori Launchpad)
-				rootPath: jQuery.sap.getModulePath("sap.ui.demo.mdtemplate"),
-				serviceUrl: "here/goes/your/serviceUrl/"
-			},
-
-			routing : {
-				config : {
-					routerClass : "sap.m.routing.Router",
-					viewType : "XML",
-					viewPath : "sap.ui.demo.mdtemplate.view",
-					controlId: "idAppControl",
-					controlAggregation: "detailPages",
-					bypassed: {
-						target: ["master", "notFound"]
-					}
-				},
-				routes : [
-					{
-						pattern: "",
-						name: "master",
-						target: ["object", "master"]
-					},
-					{
-						pattern : "object/{objectId}",
-						name : "object",
-						target: ["master", "object"]
-					},
-					{
-						pattern : "object/{objectId}/lineitem/{lineItemId}",
-						name: "lineItem",
-						target: ["master", "lineItem"]
-					}
-				],
-				targets: {
-					master : {
-						viewName: "Master",
-						viewLevel: 1,
-						controlAggregation: "masterPages"
-					},
-					object : {
-						viewName: "Detail",
-						viewLevel: 2
-					},
-					lineItem : {
-						viewName: "LineItem",
-						viewLevel: 3
-					},
-					// not found targets
-					detailObjectNotFound : {
-						viewName: "DetailObjectNotFound",
-						viewLevel: 3
-					},
-					detailNoObjectsAvailable: {
-						viewName: "DetailNoObjectsAvailable",
-						viewLevel: 3
-					},
-					lineItemNotFound : {
-						viewName: "LineItemNotFound",
-						viewLevel: 3
-					},
-					notFound : {
-						viewName: "NotFound",
-						viewLevel: 3
-					}
-				}
+				rootPath: jQuery.sap.getModulePath("sap.ui.demo.mdtemplate")
 			}
 		},
 
@@ -102,6 +31,7 @@ sap.ui.define([
 		 * @override
 		 */
 		init : function () {
+
 			var mConfig = this.getMetadata().getConfig();
 
 			// call the base component's init function
@@ -127,6 +57,8 @@ sap.ui.define([
 
 			// create the views based on the url/hash
 			this.getRouter().initialize();
+			// fire a onInit event on the component.
+			this.fireEvent(this.M_EVENTS.OnInit);
 		},
 
 		/**
@@ -153,6 +85,10 @@ sap.ui.define([
 			this._oRootView = sap.ui.core.UIComponent.prototype.createContent.apply(this, arguments);
 
 			return this._oRootView;
+		},
+
+		M_EVENTS : {
+			OnInit : "onInit"
 		},
 
 		/**
