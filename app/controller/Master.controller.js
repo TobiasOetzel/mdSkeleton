@@ -69,7 +69,7 @@ sap.ui.define([
 								this.getRouter().navTo("object", {objectId : sObjectId}, true);
 						}	
 					}.bind(this)
-				)
+				);
 			}, this);
 			
 			this.getRouter().attachBypassed(this.onBypassed, this);

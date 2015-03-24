@@ -128,6 +128,6 @@ function (Opa5, NavigationAction, StartAppArrangement, NavigationAssertion) {
 		//Assertions
 		Then.iShouldSeeAnEmptyHash().
 			and.iTeardownMyAppFrame();
-	})
+	});
 
 });
