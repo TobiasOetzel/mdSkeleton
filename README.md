@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/TobiasOetzel/mdSkeleton.svg?branch=master)](https://travis-ci.org/TobiasOetzel/mdSkeleton)
+
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !!!    The md-template app is EXPERIMENTAL, do not use this code productively    !!!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
