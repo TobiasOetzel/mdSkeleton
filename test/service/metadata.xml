@@ -3,7 +3,7 @@
 	xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
 	<edmx:DataServices m:DataServiceVersion="2.0"
 		xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata">
-		<Schema Namespace="MD_TEMPLATE" xml:lang="en"
+		<Schema Namespace="Master_Detail" xml:lang="en"
 			xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
 
 			<EntityType Name="Object" sap:content-version="1"
@@ -29,9 +29,9 @@
 				<Property Name="UnitNumber" Type="Edm.Decimal" Nullable="false"
 					Precision="23" Scale="4" sap:label="Unit Number" sap:creatable="false"
 					sap:updatable="false" sap:filterable="false" />
-					<NavigationProperty Name="LineItems" Relationship="MD_TEMPLATE.FK_Object_LineItems" FromRole="Objects" ToRole="LineItems" />
+					<NavigationProperty Name="LineItems" Relationship="Master_Detail.FK_Object_LineItems" FromRole="Objects" ToRole="LineItems" />
 			</EntityType>
-			
+
 			<EntityType Name="LineItem" sap:content-version="1"
 				xmlns:sap="http://www.sap.com/Protocols/SAPData">
 				<Key>
@@ -55,12 +55,12 @@
 				<Property Name="UnitNumber" Type="Edm.Decimal" Nullable="false"
 					Precision="23" Scale="4" sap:label="Unit Number" sap:creatable="false"
 					sap:updatable="false" sap:filterable="false" />
-				<NavigationProperty Name="Object" Relationship="MD_TEMPLATE.FK_Object_LineItems" FromRole="LineItems" ToRole="Objects" />
+				<NavigationProperty Name="Object" Relationship="Master_Detail.FK_Object_LineItems" FromRole="LineItems" ToRole="Objects" />
 			</EntityType>
-			
-			 <Association Name="MD_TEMPLATE.FK_Object_LineItems">
-		        <End Role="LineItems" Type="MD_TEMPLATE.LineItem" Multiplicity="*" />
-		        <End Role="Objects" Type="MD_TEMPLATE.Object" Multiplicity="1" />
+
+			 <Association Name="Master_Detail.FK_Object_LineItems">
+		        <End Role="LineItems" Type="Master_Detail.LineItem" Multiplicity="*" />
+		        <End Role="Objects" Type="Master_Detail.Object" Multiplicity="1" />
 		        <ReferentialConstraint>
 		          <Principal Role="Objects">
 		            <PropertyRef Name="ObjectID" />
@@ -70,19 +70,19 @@
 		          </Dependent>
 		        </ReferentialConstraint>
 		     </Association>
-			
-			<EntityContainer Name="MD_TEMPLATE_ENTITIES"
+
+			<EntityContainer Name="Master_Detail_ENTITIES"
 				m:IsDefaultEntityContainer="true">
-				<EntitySet Name="Objects" EntityType="MD_TEMPLATE.Object"
+				<EntitySet Name="Objects" EntityType="Master_Detail.Object"
 					sap:creatable="false" sap:updatable="false" sap:deletable="false"
 					sap:pageable="false" sap:content-version="1"
 					xmlns:sap="http://www.sap.com/Protocols/SAPData" />
 				<EntitySet Name="LineItems"
-					EntityType="MD_TEMPLATE.LineItem"
+					EntityType="Master_Detail.LineItem"
 					sap:creatable="false" sap:updatable="false" sap:deletable="false"
 					sap:pageable="false" sap:content-version="1"
 					xmlns:sap="http://www.sap.com/Protocols/SAPData" />
-				 <AssociationSet Name="MD_TEMPLATE.FK_Object_LineItems" Association="MD_TEMPLATE.FK_Object_LineItems">
+				 <AssociationSet Name="Master_Detail.FK_Object_LineItems" Association="Master_Detail.FK_Object_LineItems">
 		          <End Role="LineItems" EntitySet="LineItems" />
 		          <End Role="Objects" EntitySet="Objects" />
 		         </AssociationSet>

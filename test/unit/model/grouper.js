@@ -1,10 +1,10 @@
 /*global QUnit, jQuery *///declare unusual global vars for JSLint/SAPUI5 validation
 sap.ui.require(
 	[
-		'sap/ui/demo/mdtemplate/model/grouper',
-		'sap/ui/model/resource/ResourceModel',
-		'sap/ui/thirdparty/sinon',
-		'sap/ui/thirdparty/sinon-qunit'
+		"sap/ui/demo/masterdetail/model/grouper",
+		"sap/ui/model/resource/ResourceModel",
+		"sap/ui/thirdparty/sinon",
+		"sap/ui/thirdparty/sinon-qunit"
 	],
 	function (grouper, ResourceModel) {
 	"use strict";
@@ -14,7 +14,7 @@ sap.ui.require(
 		QUnit.module("Grouping functions", {
 			setup: function () {
 				this._oResourceModel = new ResourceModel({
-					bundleUrl : [$.sap.getModulePath("sap.ui.demo.mdtemplate"), "i18n/messageBundle.properties"].join("/")
+					bundleUrl : [$.sap.getModulePath("sap.ui.demo.masterdetail"), "i18n/i18n.properties"].join("/")
 				});
 			},
 			teardown: function () {

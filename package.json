@@ -1,7 +1,7 @@
 {
-  "name": "md-template",
+  "name": "masterdetail",
   "version": "1.0.0",
-  "description": "MD-template",
+  "description": "Master-Detail",
   "private": true,
   "scripts": {
     "test": "grunt"

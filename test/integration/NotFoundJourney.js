@@ -2,87 +2,65 @@
 
 sap.ui.require(
 	[
-		'sap/ui/test/Opa5',
-		'sap/ui/demo/mdtemplate/test/integration/action/NavigationAction',
-		'sap/ui/demo/mdtemplate/test/integration/arrangement/StartAppArrangement',
-		'sap/ui/demo/mdtemplate/test/integration/assertion/NavigationAssertion'
+		"sap/ui/test/Opa5"
 	],
-	function (Opa5, NavigationAction, StartAppArrangement, NavigationAssertion) {
+	function () {
+		"use strict";
 
-		module("Not found Journey", { setup : function () {
-			Opa5.extendConfig({
-				actions : new NavigationAction(),
-				arrangements : new StartAppArrangement(),
-				assertions : new NavigationAssertion(),
-				viewNamespace : "sap.ui.demo.mdtemplate.view."
-			});
-		}}); 
-		
+		QUnit.module("Desktop not found");
+
 		opaTest("Should see the resource not found page and no selection in the master list when navigating to an invalid hash", function (Given, When, Then) {
 			//Arrangement
-			Given.iStartTheAppOnADesktopDevice();
-			
+			Given.iStartTheApp();
+
 			//Actions
-			When.iWaitUntilTheMasterListIsLoaded().
-				and.iChangeTheHashToSomethingInvalid();
+			When.onTheMasterPage.iWaitUntilTheListIsLoaded();
+			When.onTheBrowserPage.iChangeTheHashToSomethingInvalid();
 
 			// Assertions
-			Then.iShouldSeeTheNotFoundPage().
-				and.theListShouldHaveNoSelection().
-				and.theNotFoundPageShouldSayResourceNotFound().
+			Then.onTheNotFoundPage.iShouldSeeTheNotFoundPage().
+				and.theNotFoundPageShouldSayResourceNotFound();
+			Then.onTheMasterPage.theListShouldHaveNoSelection().
 				and.iTeardownMyAppFrame();
 		});
 
-		function opaTestPhoneAndDesktop (sTestName, sHash , fnTest) {
-			opaTest("Phone: " + sTestName, function (Given, When, Then) {
-				Given.iStartTheAppOnAPhone(sHash);
-				fnTest.call(this, Given, When, Then);
-				Then.iTeardownMyAppFrame();
-			});
+		function opaTestFactory (sTestName, sHash , fnTest) {
 			opaTest("Desktop: " + sTestName, function (Given, When, Then) {
-				Given.iStartTheAppOnADesktopDevice(sHash);
+				Given.iStartTheApp(sHash);
 				fnTest.call(this, Given, When, Then);
 				Then.iTeardownMyAppFrame();
 			});
 		}
 
-		opaTestPhoneAndDesktop("Should see the not found page if the hash is something that matches no route", "#somethingThatDoesNotExist", function (Given, When, Then) {
+		opaTestFactory("Should see the not found page if the hash is something that matches no route", "#somethingThatDoesNotExist", function (Given, When, Then) {
 			//Actions
-			When.iLookAtTheScreen();
+			When.onTheNotFoundPage.iLookAtTheScreen();
 
 			// Assertions
-			Then.iShouldSeeTheNotFoundPage().
+			Then.onTheNotFoundPage.iShouldSeeTheNotFoundPage().
 				and.theNotFoundPageShouldSayResourceNotFound();
 		});
-		
-		opaTestPhoneAndDesktop("Should see the not found master and detail page if an invalid object id has been called", "#/object/SomeInvalidObjectId", function (Given, When, Then) {
+
+		opaTestFactory("Should see the not found master and detail page if an invalid object id has been called", "#/object/SomeInvalidObjectId", function (Given, When, Then) {
 			//Actions
-			When.iLookAtTheScreen();
+			When.onTheNotFoundPage.iLookAtTheScreen();
 
 			// Assertions
-			Then.iShouldSeeTheObjectNotFoundPage().
+			Then.onTheNotFoundPage.iShouldSeeTheObjectNotFoundPage().
 				and.theNotFoundPageShouldSayObjectNotFound();
 		});
 
-		opaTestPhoneAndDesktop("Should see the not found master and detail page if an invalid line item id has been called", "#/object/ObjectID_10/lineitem/SomeInvalidLineItemId", function (Given, When, Then) {
+		opaTestFactory("Should see the not found text for no search results", "", function (Given, When, Then) {
 			//Actions
-			When.iLookAtTheScreen();
+			When.onTheMasterPage.iLookAtTheScreen();
 
 			// Assertions
-			Then.iShouldSeeTheLineItemNotFoundPage().
-				and.theNotFoundPageShouldSayLineItemNotFound();
-		});
-		
-		opaTestPhoneAndDesktop("Should see the not found text for no search results", "", function (Given, When, Then) {
+			Then.onTheMasterPage.iShouldSeeTheList();
+
 			//Actions
-			When.iLookAtTheScreen();
+			When.onTheMasterPage.iSearchForSomethingWithNoResults();
 
 			// Assertions
-			Then.iShouldSeeTheObjectList();
-			
-			When.iSearchForSomethingWithNoResults();
-
-			Then.iShouldSeeTheNoDataTextForNoSearchResults();
+			Then.onTheMasterPage.iShouldSeeTheNoDataTextForNoSearchResults();
 		});
-
 	});

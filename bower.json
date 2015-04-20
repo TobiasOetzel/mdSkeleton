@@ -1,13 +1,13 @@
 {
-  "name": "md-template",
+  "name": "masterdetail",
   "version": "0.0.0",
   "authors": [
     "SAP SE"
   ],
-  "description": "md-template",
+  "description": "masterdetail",
   "main": "webapp/index.html",
   "keywords": [
-    "md-template"
+    "masterdetail"
   ],
   "license": "MIT",
   "private": true,
@@ -19,6 +19,6 @@
     "tests"
   ],
 	"dependencies": {
-		"openui5": "SAP/openui5"
+		"openui5": "SAP/openui5#master"
 	}
 }

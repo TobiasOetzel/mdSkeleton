@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 	grunt.initConfig({
 
 		dir: {
-			webapp: 'app',
+			webapp: 'src',
 			tests: 'test',
 			dist: 'dist',
 			bower_components: 'bower_components',
@@ -56,7 +56,13 @@ module.exports = function(grunt) {
 			options: {
 				/* for debugging*/
 				'--remote-debugger-autorun' : 'yes',
-				'--remote-debugger-port' : 8000
+				'--remote-debugger-port' : 8000,
+
+				page: {
+					settings: {
+						userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 5_0_1 like Mac OS X) AppleWebKit/534.48 (KHTML, like Gecko) Version/5.1 Mobile/9A406 Safari/7534.48.3" // iOS userAgent string
+					}
+				}
 			},
 
 			unit: {
@@ -70,7 +76,8 @@ module.exports = function(grunt) {
 			opa: {
 				options: {
 					urls: [
-						'<%= dir.localServerTestUrl %>/integration/opaTests.qunit.html'
+						'<%= dir.localServerTestUrl %>/integration/opaTests.qunit.html',
+						'<%= dir.localServerTestUrl %>/integration/opaTestsPhone.qunit.html'
 					],
 					// same as qunits timeout 90 seconds since opa test might take a while
 					timeout: 900000
